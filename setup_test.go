@@ -38,7 +38,7 @@ func TestPNSParse(t *testing.T) {
 			nil,
 		},
 		{ // 2
-			".pls.link",
+			".pls.to",
 			`pns {
 			  connection /home/test/.ethereum/geth.ipc
 			  plslinknameservers ns1.plsdns.fyi

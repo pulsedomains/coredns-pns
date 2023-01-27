@@ -7,7 +7,7 @@ CoreDNS-PNS is a CoreDNS plugin that resolves DNS information over PNS.  It has 
 
 Details of the first feature can be found at http://www.wealdtech.com/articles/ethdns-an-ethereum-backend-for-the-domain-name-system/
 
-The second feature provides a mechanism to map DNS domains to PNS domains by removing the relevant suffix, for example the DNS domain `wealdtech.pls.link` maps to the PNS domain `wealdtech.pls`, and returning information for IPFS gateways (if an A or AAAA record is requested) as well as IPFS and content hashes (if a TXT record is requested).  The result of this is that IPFS content can be obtained from any web browser by simply 
+The second feature provides a mechanism to map DNS domains to PNS domains by removing the relevant suffix, for example the DNS domain `wealdtech.pls.to` maps to the PNS domain `wealdtech.pls`, and returning information for IPFS gateways (if an A or AAAA record is requested) as well as IPFS and content hashes (if a TXT record is requested).  The result of this is that IPFS content can be obtained from any web browser by simply 
 
 # Building
 
@@ -21,10 +21,10 @@ The plugin has a number of configuration options.  An example annotated Corefile
 # This section enables DNS lookups for all domains on PNS
 . {
   rewrite stop {
-    # This rewrites any requests for *.pls.link domains to *.pls internally
+    # This rewrites any requests for *.pls.to domains to *.pls internally
     # prior to being processed by the main PNS resolver.
-    name regex (.*)\.pls\.link {1}.pls
-    answer name (.*)\.pls {1}.pls.link
+    name regex (.*)\.pls\.to {1}.pls
+    answer name (.*)\.pls {1}.pls.to
   }
   pns {
     # connection is the connection to an Ethereum node.  It is *highly*
