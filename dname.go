@@ -1,4 +1,4 @@
-package ens
+package pns
 
 import (
 	"github.com/coredns/coredns/plugin/pkg/dnsutil"

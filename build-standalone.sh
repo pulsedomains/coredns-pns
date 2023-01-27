@@ -16,7 +16,7 @@ echo "Patching plugin config..."
 ed plugin.cfg <<EOED
 /rewrite:rewrite
 a
-ens:github.com/wealdtech/coredns-ens
+pns:github.com/pulsedomains/coredns-pns
 .
 w
 q
@@ -26,18 +26,18 @@ EOED
 echo "Patching go modules..."
 ed go.mod <<EOED
 a
-replace github.com/wealdtech/coredns-ens => ../..
+replace github.com/pulsedomains/coredns-pns => ../..
 .
 /^)
 -1
 a
-	github.com/wealdtech/coredns-ens v1.3.1
+	github.com/pulsedomains/coredns-pns v1.3.1
 .
 w
 q
 EOED
 
-go get github.com/wealdtech/coredns-ens@v1.3.1
+go get github.com/pulsedomains/coredns-pns@v1.3.1
 go get
 go mod download
 

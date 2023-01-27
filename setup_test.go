@@ -1,4 +1,4 @@
-package ens
+package pns
 
 import (
 	"testing"
@@ -6,19 +6,19 @@ import (
 	"github.com/coredns/caddy"
 )
 
-func TestENSParse(t *testing.T) {
+func TestPNSParse(t *testing.T) {
 	tests := []struct {
 		key                string
 		inputFileRules     string
 		err                string
 		connection         string
-		ethlinknameservers []string
+		plslinknameservers []string
 		ipfsgatewayas      []string
 		ipfsgatewayaaaas   []string
 	}{
 		{ // 0
 			".",
-			`ens {
+			`pns {
 			}`,
 			"Testfile:2 - Error during parsing: no connection",
 			"",
@@ -28,7 +28,7 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 1
 			".",
-			`ens {
+			`pns {
 			   connection
 			}`,
 			"Testfile:2 - Error during parsing: invalid connection; no value",
@@ -38,32 +38,32 @@ func TestENSParse(t *testing.T) {
 			nil,
 		},
 		{ // 2
-			".eth.link",
-			`ens {
+			".pls.link",
+			`pns {
 			  connection /home/test/.ethereum/geth.ipc
-			  ethlinknameservers ns1.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi
 			}`,
 			"",
 			"/home/test/.ethereum/geth.ipc",
-			[]string{"ns1.ethdns.xyz."},
+			[]string{"ns1.plsdns.fyi."},
 			nil,
 			nil,
 		},
 		{ // 3
 			".",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			}`,
 			"",
 			"http://localhost:8545/",
-			[]string{"ns1.ethdns.xyz.", "ns2.ethdns.xyz."},
+			[]string{"ns1.plsdns.fyi.", "ns2.plsdns.fyi."},
 			nil,
 			nil,
 		},
 		{ // 4
 			".",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
 			  ipfsgatewaya
 			}`,
@@ -75,9 +75,9 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 5
 			".",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			  ipfsgatewaya 193.62.81.1
 			}`,
 			"",
@@ -88,7 +88,7 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 6
 			".",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
 			  ipfsgatewayaaaa
 			}`,
@@ -100,9 +100,9 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 7
 			".",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			  ipfsgatewayaaaa fe80::b8fb:325d:fb5a:40e7
 			}`,
 			"",
@@ -113,9 +113,9 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 8
 			"tls://.:8053",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			  ipfsgatewayaaaa fe80::b8fb:325d:fb5a:40e7
 			}`,
 			"",
@@ -126,7 +126,7 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 9
 			".:8053",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/ bad
 			  ipfsgatewayaaaa fe80::b8fb:325d:fb5a:40e7
 			}`,
@@ -138,9 +138,9 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 10
 			".:8053",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			  ipfsgatewaya 193.62.81.1 193.62.81.2
 			}`,
 			"",
@@ -151,9 +151,9 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 11
 			".:8053",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
-			  ethlinknameservers ns1.ethdns.xyz ns2.ethdns.xyz
+			  plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 			  ipfsgatewayaaaa fe80::b8fb:325d:fb5a:40e7 fe80::b8fb:325d:fb5a:40e8
 			}`,
 			"",
@@ -164,7 +164,7 @@ func TestENSParse(t *testing.T) {
 		},
 		{ // 12
 			".:8053",
-			`ens {
+			`pns {
 			  connection http://localhost:8545/
 			  ipfsgatewayaaaa fe80::b8fb:325d:fb5a:40e7 fe80::b8fb:325d:fb5a:40e8
 			  bad
@@ -178,9 +178,9 @@ func TestENSParse(t *testing.T) {
 	}
 
 	for i, test := range tests {
-		c := caddy.NewTestController("ens", test.inputFileRules)
+		c := caddy.NewTestController("pns", test.inputFileRules)
 		c.Key = test.key
-		connection, ethlinknameservers, ipfsgatewayas, ipfsgatewayaaaas, err := ensParse(c)
+		connection, plslinknameservers, ipfsgatewayas, ipfsgatewayaaaas, err := pnsParse(c)
 
 		if test.err != "" {
 			if err == nil {
@@ -196,13 +196,13 @@ func TestENSParse(t *testing.T) {
 				if test.connection != "" && connection != test.connection {
 					t.Fatalf("Test %d connection expected %v, got %v", i, test.connection, connection)
 				}
-				if test.ethlinknameservers != nil {
-					if len(ethlinknameservers) != len(test.ethlinknameservers) {
-						t.Fatalf("Test %d ethlinknameservers expected %v entries, got %v", i, len(test.ethlinknameservers), len(ethlinknameservers))
+				if test.plslinknameservers != nil {
+					if len(plslinknameservers) != len(test.plslinknameservers) {
+						t.Fatalf("Test %d plslinknameservers expected %v entries, got %v", i, len(test.plslinknameservers), len(plslinknameservers))
 					}
-					for j := range test.ethlinknameservers {
-						if ethlinknameservers[j] != test.ethlinknameservers[j] {
-							t.Fatalf("Test %d ethlinknameservers expected %v, got %v", i, test.ethlinknameservers[j], ethlinknameservers[j])
+					for j := range test.plslinknameservers {
+						if plslinknameservers[j] != test.plslinknameservers[j] {
+							t.Fatalf("Test %d plslinknameservers expected %v, got %v", i, test.plslinknameservers[j], plslinknameservers[j])
 						}
 					}
 				}

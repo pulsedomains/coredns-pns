@@ -1,4 +1,4 @@
-package ens
+package pns
 
 import (
 	"strings"
@@ -7,38 +7,38 @@ import (
 	"github.com/coredns/coredns/core/dnsserver"
 	"github.com/coredns/coredns/plugin"
 	"github.com/ethereum/go-ethereum/ethclient"
-	ens "github.com/wealdtech/go-ens/v3"
+	pns "github.com/wealdtech/go-ens/v3"
 )
 
 func init() {
-	caddy.RegisterPlugin("ens", caddy.Plugin{
+	caddy.RegisterPlugin("pns", caddy.Plugin{
 		ServerType: "dns",
-		Action:     setupENS,
+		Action:     setupPNS,
 	})
 }
 
-func setupENS(c *caddy.Controller) error {
-	connection, ethLinkNameServers, ipfsGatewayAs, ipfsGatewayAAAAs, err := ensParse(c)
+func setupPNS(c *caddy.Controller) error {
+	connection, plsLinkNameServers, ipfsGatewayAs, ipfsGatewayAAAAs, err := pnsParse(c)
 	if err != nil {
-		return plugin.Error("ens", err)
+		return plugin.Error("pns", err)
 	}
 
 	client, err := ethclient.Dial(connection)
 	if err != nil {
-		return plugin.Error("ens", err)
+		return plugin.Error("pns", err)
 	}
 
 	// Obtain the registry contract
-	registry, err := ens.NewRegistry(client)
+	registry, err := pns.NewRegistry(client)
 	if err != nil {
-		return plugin.Error("ens", err)
+		return plugin.Error("pns", err)
 	}
 
 	dnsserver.GetConfig(c).AddPlugin(func(next plugin.Handler) plugin.Handler {
-		return ENS{
+		return PNS{
 			Next:               next,
 			Client:             client,
-			EthLinkNameServers: ethLinkNameServers,
+			PlsLinkNameServers: plsLinkNameServers,
 			Registry:           registry,
 			IPFSGatewayAs:      ipfsGatewayAs,
 			IPFSGatewayAAAAs:   ipfsGatewayAAAAs,
@@ -48,9 +48,9 @@ func setupENS(c *caddy.Controller) error {
 	return nil
 }
 
-func ensParse(c *caddy.Controller) (string, []string, []string, []string, error) {
+func pnsParse(c *caddy.Controller) (string, []string, []string, []string, error) {
 	var connection string
-	ethLinkNameServers := make([]string, 0)
+	plsLinkNameServers := make([]string, 0)
 	ipfsGatewayAs := make([]string, 0)
 	ipfsGatewayAAAAs := make([]string, 0)
 
@@ -66,13 +66,13 @@ func ensParse(c *caddy.Controller) (string, []string, []string, []string, error)
 				return "", nil, nil, nil, c.Errf("invalid connection; multiple values")
 			}
 			connection = args[0]
-		case "ethlinknameservers":
+		case "plslinknameservers":
 			args := c.RemainingArgs()
 			if len(args) == 0 {
-				return "", nil, nil, nil, c.Errf("invalid ethlinknameservers; no value")
+				return "", nil, nil, nil, c.Errf("invalid plslinknameservers; no value")
 			}
-			ethLinkNameServers = make([]string, len(args))
-			copy(ethLinkNameServers, args)
+			plsLinkNameServers = make([]string, len(args))
+			copy(plsLinkNameServers, args)
 		case "ipfsgatewaya":
 			args := c.RemainingArgs()
 			if len(args) == 0 {
@@ -94,13 +94,13 @@ func ensParse(c *caddy.Controller) (string, []string, []string, []string, error)
 	if connection == "" {
 		return "", nil, nil, nil, c.Errf("no connection")
 	}
-	if len(ethLinkNameServers) == 0 {
-		return "", nil, nil, nil, c.Errf("no ethlinknameservers")
+	if len(plsLinkNameServers) == 0 {
+		return "", nil, nil, nil, c.Errf("no plslinknameservers")
 	}
-	for i := range ethLinkNameServers {
-		if !strings.HasSuffix(ethLinkNameServers[i], ".") {
-			ethLinkNameServers[i] = ethLinkNameServers[i] + "."
+	for i := range plsLinkNameServers {
+		if !strings.HasSuffix(plsLinkNameServers[i], ".") {
+			plsLinkNameServers[i] = plsLinkNameServers[i] + "."
 		}
 	}
-	return connection, ethLinkNameServers, ipfsGatewayAs, ipfsGatewayAAAAs, nil
+	return connection, plsLinkNameServers, ipfsGatewayAs, ipfsGatewayAAAAs, nil
 }

@@ -1,4 +1,4 @@
-package ens
+package pns
 
 import (
 	"strings"
