@@ -11,7 +11,7 @@ The second feature provides a mechanism to map DNS domains to PNS domains by rem
 
 # Building
 
-The latest build is always available as a docker repository at `wealdtech/coredns-pns`.  If you want to build a standalone copy of CoreDNS with this plugin enabled run the `build-standalone.sh` script, which should work on most unix-like systems.
+The latest build is always available as a docker repository at `pulsedomains/coredns-pns`.  If you want to build a standalone copy of CoreDNS with this plugin enabled run the `build-standalone.sh` script, which should work on most unix-like systems.
 
 # Corefile
 
@@ -73,6 +73,6 @@ Running CoreDNS standalone is simply a case of starting the binary.  See the Cor
 
 Running CoreDNS with Docker requires running the image created in the `Building` section.  A sample command-line might be:
 
-    docker run -p 53:53/udp --volume=/home/coredns:/etc/coredns wealdtech/coredns-pns:latest
+    docker run -p 53:53/udp --volume=/home/coredns:/etc/coredns pulsedomains/coredns-pns:latest
 
 where `/home/coredns` is the directory on the server that contains the Corefile and certificates.
