@@ -14,7 +14,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	lru "github.com/hashicorp/golang-lru"
 	"github.com/labstack/gommon/log"
-	pns "github.com/wealdtech/go-ens/v3"
+	pns "github.com/pulsedomains/go-pns/v3"
 
 	"github.com/miekg/dns"
 )
