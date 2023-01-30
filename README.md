@@ -27,7 +27,7 @@ The plugin has a number of configuration options.  An example annotated Corefile
     answer name (.*)\.pls {1}.pls.to
   }
   pns {
-    # connection is the connection to an Ethereum node.  It is *highly*
+    # connection is the connection to an PulseChain node.  It is *highly*
     # recommended that a local node is used, as remote connections can
     # cause DNS requests to time out.
     # This can be either a path to an IPC socket or a URL to a JSON-RPC
@@ -40,14 +40,14 @@ The plugin has a number of configuration options.  An example annotated Corefile
     plslinknameservers ns1.plsdns.fyi ns2.plsdns.fyi
 
     # ipfsgatewaya is the address of an PNS-enabled IPFS gateway.
-    # This value is returned when a request for an A record of an Ethlink
+    # This value is returned when a request for an A record of an Plslink
     # domain is received and the domain has a contenthash record in PNS but
     # no A record.  Multiple values can be supplied, separated by a space,
     # in which case all records will be returned.
     ipfsgatewaya 176.9.154.81
 
     # ipfsgatewayaaaa is the address of an PNS-enabled IPFS gateway.
-    # This value is returned when a request for an AAAA record of an Ethlink
+    # This value is returned when a request for an AAAA record of an Plslink
     # domain is received and the domain has a contenthash record in PNS but
     # no A record.  Multiple values can be supplied, separated by a space,
     # in which case all records will be returned.
