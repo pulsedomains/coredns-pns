@@ -50,7 +50,7 @@
                   "dns": {
                     "provider": {
                       "name": "cloudfare",
-                      "auth_token": "${CF_API_TOKEN}"
+                      "auth_token": "{env.CF_API_TOKEN}"
                     },
                     "resolvers": ["208.67.222.222"],
                     "ttl": "300s",
@@ -66,10 +66,10 @@
       }
     },
     "http": {
-      "http_port": 8080,
+      "http_port": 80,
       "servers": {
         "srv0": {
-          "listen": [":8080"],
+          "listen": [":80"],
           "automatic_https": {
             "disable_redirects": true
           },
