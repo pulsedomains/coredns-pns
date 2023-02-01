@@ -20,7 +20,4 @@ RUN apt-get update && \
 COPY --from=0 /etc/ssl/certs /etc/ssl/certs
 COPY --from=0 /coredns /coredns
 
-EXPOSE 53 53/udp
-EXPOSE 853
-EXPOSE 443
 ENTRYPOINT ["/coredns"]
