@@ -21,8 +21,10 @@ https://pls:8443 {
 
 # Capture pls.to queries from ipfs/kubo
 pls.to:8853 {
-  name regex (.*)\.pls\.to {1}.pls
-  answer name (.*)\.pls {1}.pls.to
+  rewrite stop {
+    name regex (.*)\.pls\.to {1}.pls
+    answer name (.*)\.pls {1}.pls.to
+  }
 
   pns {
     connection http://127.0.0.1:8575
