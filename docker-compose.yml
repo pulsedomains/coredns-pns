@@ -48,9 +48,9 @@ services:
       - ./data/coredns/ssl/certs:/etc/ssl/certs
       - ./Corefile:/Corefile
     ports:
-      - "443:8443"
-      - "53:8853"
-      - "53:8853/udp"
+      - "8443:8443"
+      - "8853:8853"
+      - "8853:8853/udp"
     networks:
       - pnsdns
     restart: always
