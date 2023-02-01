@@ -1,13 +1,13 @@
 # Answer all .pls queries from ipfs/kubo
 https://pls:8443 {
-  tls /etc/ssl/certs/tls.crt /etc/ssl/certs/tls.key /etc/ssl/certs/ca.crt
+  tls /etc/ssl/certs/tls.pem /etc/ssl/certs/tls.key
 
   pns {
-    connection http://127.0.0.1:8575
+    connection http://fullnode_host:8575
 
-    ethlinknameservers 127.0.0.1
+    plslinknameservers 127.0.0.1
 
-    ipfsgatewaya 127.0.0.1:8080
+    ipfsgatewaya kubo_host:8080
   }
 
   log {
@@ -27,11 +27,11 @@ pls.to:8853 {
   }
 
   pns {
-    connection http://127.0.0.1:8575
+    connection http://fullnode_host:8575
 
-    ethlinknameservers 127.0.0.1
+    plslinknameservers 127.0.0.1
 
-    ipfsgatewaya 127.0.0.1:8080
+    ipfsgatewaya kubo_host:8080
   }
 
   log {
@@ -46,11 +46,11 @@ pls.to:8853 {
 # Answer all .pls queries
 pls:8853 {
   pns {
-    connection http://127.0.0.1:8575
+    connection http://fullnode_host:8575
 
-    ethlinknameservers 127.0.0.1
+    plslinknameservers 127.0.0.1
 
-    ipfsgatewaya 127.0.0.1:8080
+    ipfsgatewaya kubo_host:8080
   }
 
   log {
