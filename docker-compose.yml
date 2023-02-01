@@ -11,6 +11,7 @@ services:
       - "4001:4001"
       - "4001:4001/udp"
       - "8080:8080"
+      - "8081:8081"
       - "5001:5001"
     networks:
       - pnsdns
@@ -44,12 +45,12 @@ services:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ./data/coredns/certs:/etc/ssl/certs
-      - ./Corefile:Corefile
+      - ./data/coredns/ssl/certs:/etc/ssl/certs
+      - ./Corefile:/Corefile
     ports:
-      - "15353:53"
-      - "15353:53/udp"
-      - "15853:853"
+      - "443:8443"
+      - "53:8853"
+      - "53:8853/udp"
     networks:
       - pnsdns
     restart: always

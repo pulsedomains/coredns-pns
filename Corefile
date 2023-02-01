@@ -1,43 +1,61 @@
-# This section enables DNS lookups for all domains on PNS
-. {
-  rewrite stop {
-    # This rewrites any requests for *.pls.to domains to *.pls internally
-    # prior to being processed by the main PNS resolver.
-    name regex (.*)\.pls\.to {1}.pls
-    answer name (.*)\.pls {1}.pls.to
-  }
+# Answer all .pls queries from ipfs/kubo
+https://pls:8443 {
+  tls /etc/ssl/certs/tls.crt /etc/ssl/certs/tls.key /etc/ssl/certs/ca.crt
+
   pns {
-    # connection is the connection to an PulseChain node.  It is *highly*
-    # recommended that a local node is used, as remote connections can
-    # cause DNS requests to time out.
-    # This can be either a path to an IPC socket or a URL to a JSON-RPC
-    # endpoint.
     connection http://127.0.0.1:8575
 
-    # plslinknameservers are the names of the nameservers that serve
-    # PlsLink domains.  This will usually be the name of this server,
-    # plus potentially one or more others.
-    plslinknameservers ns1.pls.to
+    ethlinknameservers 127.0.0.1
 
-    # ipfsgatewaya is the address of an PNS-enabled IPFS gateway.
-    # This value is returned when a request for an A record of an Plslink
-    # domain is received and the domain has a contenthash record in PNS but
-    # no A record.  Multiple values can be supplied, separated by a space,
-    # in which case all records will be returned.
-    ipfsgatewaya 127.0.0.1
-
-    # ipfsgatewayaaaa is the address of an PNS-enabled IPFS gateway.
-    # This value is returned when a request for an AAAA record of an Plslink
-    # domain is received and the domain has a contenthash record in PNS but
-    # no A record.  Multiple values can be supplied, separated by a space,
-    # in which case all records will be returned.
-    ipfsgatewayaaaa 127.0.0.1
+    ipfsgatewaya 127.0.0.1:8080
   }
 
-  # This enables DNS forwarding.  It should only be enabled if this DNS server
-  # is not exposed to the internet, otherwise it becomes an open DNS server and
-  # will be flooded with attack packets.
-  forward . 8.8.8.8
+  log {
+    class all
+  }
+
+  cache 1800
+
+  errors
+}
+
+# Capture pls.to queries from ipfs/kubo
+pls.to:8853 {
+  name regex (.*)\.pls\.to {1}.pls
+  answer name (.*)\.pls {1}.pls.to
+
+  pns {
+    connection http://127.0.0.1:8575
+
+    ethlinknameservers 127.0.0.1
+
+    ipfsgatewaya 127.0.0.1:8080
+  }
+
+  log {
+    class all
+  }
+
+  cache 1800
+
+  errors
+}
+
+# Answer all .pls queries
+pls:8853 {
+  pns {
+    connection http://127.0.0.1:8575
+
+    ethlinknameservers 127.0.0.1
+
+    ipfsgatewaya 127.0.0.1:8080
+  }
+
+  log {
+    class all
+  }
+
+  cache 1800
 
   errors
 }
