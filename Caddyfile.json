@@ -21,9 +21,9 @@
   "storage": {
     "module": "s3",
     "host": "s3.us-east-1.amazonaws.com",
-    "bucket": "pls-to-certificates",
-    "access_id": "AKIASRLGG5EB6LQRJ6OB",
-    "secret_key": "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",
+    "bucket": "",
+    "access_id": "{env.S3_ACCESS_KEY}",
+    "secret_key": "{env.S3_SECRET_KEY}",
     "prefix": "x509"
   },
   "apps": {
@@ -50,7 +50,7 @@
                   "dns": {
                     "provider": {
                       "name": "cloudflare",
-                      "auth_token": "{env.CF_API_TOKEN}"
+                      "api_token": "{env.CF_API_TOKEN}"
                     },
                     "resolvers": ["208.67.222.222"],
                     "ttl": "300s",
@@ -98,7 +98,7 @@
           ]
         },
         "srv1": {
-          "listen": [":8443"],
+          "listen": [":443"],
           "automatic_https": {
             "disable_redirects": true
           },
