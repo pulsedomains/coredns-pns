@@ -1,43 +1,5 @@
 version: '3.7'
 services:
-  kubo:
-    hostname: kubo_host
-    container_name: kubo
-    image: ipfs/kubo
-    volumes:
-      - ./data/kubo/export:/export
-      - ./data/kubo/ipfs:/data/ipfs
-    ports:
-      - "4001:4001"
-      - "4001:4001/udp"
-      - "8080:8080"
-      - "8081:8081"
-      - "5001:5001"
-    networks:
-      - pnsdns
-    restart: always
-  
-  fullnode:
-    hostname: fullnode_host
-    container_name: fullnode
-    image: registry.gitlab.com/pulsechaincom/go-pulse
-    tty: true
-    volumes:
-      - ./data/blockchain:/blockchain
-    ports:
-      - "8575:8575/tcp"
-      - "8576:8576/tcp"
-      - "30312:30312/tcp"
-      - "30312:30312/udp"
-    command:
-      - --datadir=/blockchain
-      - --pulsechain-testnet
-    networks:
-      - pnsdns
-    restart: always
-    stop_grace_period: 3m
-    oom_kill_disable: true
-  
   coredns:
     hostname: coredns_host
     container_name: coredns
@@ -48,9 +10,9 @@ services:
       - ./data/coredns/ssl/certs:/etc/ssl/certs
       - ./Corefile:/Corefile
     ports:
-      - "8443:8443"
-      - "8853:8853"
-      - "8853:8853/udp"
+      - "443:8443"
+      - "53:8853"
+      - "53:8853/udp"
     networks:
       - pnsdns
     restart: always

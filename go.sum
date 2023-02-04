@@ -573,8 +573,8 @@ github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyC
 github.com/valyala/fasttemplate v1.0.1/go.mod h1:UQGH1tvbgY+Nz5t2n7tXsz52dQxojPUpymEIMZ47gx8=
 github.com/valyala/fasttemplate v1.2.1 h1:TVEnxayobAdVkhQfrfes2IzOB6o+z4roRkPF52WA1u4=
 github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
-github.com/pulsedomains/go-pns/v3 v3.5.0 h1:Huc9GxBgiGweCOGTYomvsg07K2QggAqZpZ5SuiZdC8o=
-github.com/pulsedomains/go-pns/v3 v3.5.0/go.mod h1:bVuYoWYEEeEu7Zy95rIMjPR34QFJarxt8p84ywSo0YM=
+github.com/pulsedomains/go-pns/v3 v3.5.1 h1:Huc9GxBgiGweCOGTYomvsg07K2QggAqZpZ5SuiZdC8o=
+github.com/pulsedomains/go-pns/v3 v3.5.1/go.mod h1:bVuYoWYEEeEu7Zy95rIMjPR34QFJarxt8p84ywSo0YM=
 github.com/pulsedomains/go-multicodec v1.4.0 h1:iq5PgxwssxnXGGPTIK1srvt6U5bJwIp7k6kBrudIWxg=
 github.com/pulsedomains/go-multicodec v1.4.0/go.mod h1:aedGMaTeYkIqi/KCPre1ho5rTb3hGpu/snBOS3GQLw4=
 github.com/pulsedomains/go-string2pls v1.1.0 h1:USJQmysUrBYYmZs7d45pMb90hRSyEwizP7lZaOZLDAw=
