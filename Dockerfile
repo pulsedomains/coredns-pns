@@ -13,10 +13,6 @@ RUN chmod 755 coredns-pns/build.sh && coredns-pns/build.sh
 
 FROM ubuntu:latest
 
-RUN apt-get update && \
-    apt-get -uy upgrade && \
-    apt-get -y install lsof
-
 COPY --from=0 /etc/ssl/certs /etc/ssl/certs
 COPY --from=0 /coredns /coredns
 
