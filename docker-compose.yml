@@ -16,6 +16,3 @@ services:
     networks:
       - pnsdns
     restart: always
-
-networks:
-  pnsdns:

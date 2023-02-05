@@ -3,11 +3,11 @@ https://pls:8443 {
   tls /etc/ssl/certs/tls.pem /etc/ssl/certs/tls.key
 
   pns {
-    connection http://fullnode_host:8575
+    connection http://172.31.30.155:8575
 
     plslinknameservers 127.0.0.1
 
-    ipfsgatewaya kubo_host:8080
+    ipfsgatewaya 127.0.0.1:8080
   }
 
   log {
@@ -27,11 +27,11 @@ pls.to:8853 {
   }
 
   pns {
-    connection http://fullnode_host:8575
+    connection http://172.31.30.155:8575
 
     plslinknameservers 127.0.0.1
 
-    ipfsgatewaya kubo_host:8080
+    ipfsgatewaya 127.0.0.1:8080
   }
 
   log {
@@ -46,11 +46,11 @@ pls.to:8853 {
 # Answer all .pls queries
 pls:8853 {
   pns {
-    connection http://fullnode_host:8575
+    connection http://172.31.30.155:8575
 
     plslinknameservers 127.0.0.1
 
-    ipfsgatewaya kubo_host:8080
+    ipfsgatewaya 127.0.0.1:8080
   }
 
   log {
