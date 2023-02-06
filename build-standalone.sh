@@ -31,13 +31,13 @@ replace github.com/pulsedomains/coredns-pns => ../..
 /^)
 -1
 a
-	github.com/pulsedomains/coredns-pns v1.3.1
+	github.com/pulsedomains/coredns-pns v1.3.3
 .
 w
 q
 EOED
 
-go get github.com/pulsedomains/coredns-pns@v1.3.1
+go get github.com/pulsedomains/coredns-pns@v1.3.3
 go get
 go mod download
 
