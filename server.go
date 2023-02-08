@@ -41,6 +41,7 @@ type Server interface {
 
 // Obtain the lowest domain for which we are authoritative
 func lowestAuthoritativeDomain(server Server, name string) string {
+	log.Infof("lowestAuthoritativeDomain %s", name)
 	parts := strings.Split(name, ".")
 	var authoritativeDomain string
 	testDomain := ""
@@ -57,6 +58,7 @@ func lowestAuthoritativeDomain(server Server, name string) string {
 
 // Obtain the highest domain for which we are authoritative
 func highestAuthoritativeDomain(server Server, name string) string {
+	log.Infof("highestAuthoritativeDomain %s", name)
 	for name != "" {
 		if server.IsAuthoritative(name) {
 			return name

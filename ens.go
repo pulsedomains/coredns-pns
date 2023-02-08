@@ -33,6 +33,7 @@ type PNS struct {
 
 // IsAuthoritative checks if the PNS plugin is authoritative for a given domain
 func (e PNS) IsAuthoritative(domain string) bool {
+	log.Infof("IsAuthoritative %s", domain)
 	controllerAddress, err := e.Registry.Owner(strings.TrimSuffix(domain, "."))
 	if err != nil {
 		return false
@@ -44,6 +45,7 @@ func (e PNS) IsAuthoritative(domain string) bool {
 // HasRecords checks if there are any records for a specific domain and name.
 // This is used for wildcard eligibility
 func (e PNS) HasRecords(domain string, name string) (bool, error) {
+	log.Infof("HasRecords %s %s", domain, name)
 	// See if this has a contenthash record.
 	resolver, err := e.getResolver(domain)
 	if err != nil {
@@ -64,6 +66,7 @@ func (e PNS) HasRecords(domain string, name string) (bool, error) {
 
 // Query queries a given domain/name/resource combination
 func (e PNS) Query(domain string, name string, qtype uint16, do bool) ([]dns.RR, error) {
+	log.Infof("Query %s %s", domain, name)
 	log.Debugf("request type %d for name %s in domain %v", qtype, name, domain)
 
 	results := make([]dns.RR, 0)
@@ -119,6 +122,7 @@ func (e PNS) Query(domain string, name string, qtype uint16, do bool) ([]dns.RR,
 }
 
 func (e PNS) handleSOA(name string, domain string, contentHash []byte) ([]dns.RR, error) {
+	log.Infof("handleSOA %s %s", domain, name)
 	results := make([]dns.RR, 0)
 	if len(e.PlsLinkNameServers) > 0 {
 		// Create a synthetic SOA record
@@ -135,6 +139,7 @@ func (e PNS) handleSOA(name string, domain string, contentHash []byte) ([]dns.RR
 }
 
 func (e PNS) handleNS(name string, domain string, contentHash []byte) ([]dns.RR, error) {
+	log.Infof("handleNS %s %s", domain, name)
 	results := make([]dns.RR, 0)
 	for _, nameserver := range e.PlsLinkNameServers {
 		result, err := dns.NewRR(fmt.Sprintf("%s 3600 IN NS %s", domain, nameserver))
@@ -148,6 +153,7 @@ func (e PNS) handleNS(name string, domain string, contentHash []byte) ([]dns.RR,
 }
 
 func (e PNS) handleTXT(name string, domain string, contentHash []byte) ([]dns.RR, error) {
+	log.Infof("handleTXT %s %s", domain, name)
 	results := make([]dns.RR, 0)
 	txtRRSet, err := e.obtainTXTRRSet(name, domain)
 	if err == nil && len(txtRRSet) != 0 {
@@ -219,6 +225,7 @@ func (e PNS) handleTXT(name string, domain string, contentHash []byte) ([]dns.RR
 }
 
 func (e PNS) handleA(name string, domain string, contentHash []byte) ([]dns.RR, error) {
+	log.Infof("handleA %s %s", domain, name)
 	results := make([]dns.RR, 0)
 
 	aRRSet, err := e.obtainARRSet(name, domain)
@@ -247,6 +254,7 @@ func (e PNS) handleA(name string, domain string, contentHash []byte) ([]dns.RR, 
 }
 
 func (e PNS) handleAAAA(name string, domain string, contentHash []byte) ([]dns.RR, error) {
+	log.Infof("handleAAAA %s %s", domain, name)
 	results := make([]dns.RR, 0)
 
 	aaaaRRSet, err := e.obtainAAAARRSet(name, domain)
@@ -275,6 +283,7 @@ func (e PNS) handleAAAA(name string, domain string, contentHash []byte) ([]dns.R
 
 // ServeDNS implements the plugin.Handler interface.
 func (e PNS) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg) (int, error) {
+	log.Infof("ServeDNS")
 	state := request.Request{W: w, Req: r}
 
 	a := new(dns.Msg)
