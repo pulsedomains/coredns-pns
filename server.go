@@ -5,6 +5,7 @@ import (
 
 	"github.com/coredns/coredns/request"
 	"github.com/miekg/dns"
+	"github.com/labstack/gommon/log"
 )
 
 // Result of a lookup
@@ -73,6 +74,7 @@ func highestAuthoritativeDomain(server Server, name string) string {
 // Lookup contains the logic required to move through A DNS hierarchy and
 // gather the appropriate records
 func Lookup(server Server, state request.Request) ([]dns.RR, []dns.RR, []dns.RR, Result) {
+	log.Infof("Lookup")
 	qtype := state.QType()
 	do := state.Do()
 
