@@ -8,6 +8,7 @@ import (
 	"github.com/coredns/coredns/plugin"
 	"github.com/ethereum/go-ethereum/ethclient"
 	pns "github.com/pulsedomains/go-pns/v3"
+	"github.com/labstack/gommon/log"
 )
 
 func init() {
@@ -18,6 +19,7 @@ func init() {
 }
 
 func setupPNS(c *caddy.Controller) error {
+	log.Infof("setupPNS")
 	connection, plsLinkNameServers, ipfsGatewayAs, ipfsGatewayAAAAs, err := pnsParse(c)
 	if err != nil {
 		return plugin.Error("pns", err)
@@ -49,6 +51,7 @@ func setupPNS(c *caddy.Controller) error {
 }
 
 func pnsParse(c *caddy.Controller) (string, []string, []string, []string, error) {
+	log.Infof("pnsParse")
 	var connection string
 	plsLinkNameServers := make([]string, 0)
 	ipfsGatewayAs := make([]string, 0)
