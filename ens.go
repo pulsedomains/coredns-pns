@@ -397,6 +397,7 @@ func (e *PNS) getResolver(domain string) (*pns.Resolver, error) {
 		if err == nil {
 			resolverCache.Add(domain, resolver)
 		} else {
+			log.Infof("err %s", err.Error())
 			if err.Error() == "no contract code at given address" ||
 				strings.HasSuffix(err.Error(), " is not a resolver contract") {
 				resolverCache.Add(domain, nil)
