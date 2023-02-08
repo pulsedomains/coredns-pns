@@ -364,11 +364,13 @@ func init() {
 }
 
 func (e *PNS) getDNSResolver(domain string) (*pns.DNSResolver, error) {
+	log.Infof("getDNSResolver %s", domain)
 	if !dnsResolverCache.Contains(domain) {
 		resolver, err := pns.NewDNSResolver(e.Client, domain)
 		if err == nil {
 			dnsResolverCache.Add(domain, resolver)
 		} else {
+			log.Infof("getDNSResolver err %s", err.Error())
 			if err.Error() == "no contract code at given address" ||
 				strings.HasSuffix(err.Error(), " is not a DNS resolver contract") {
 				dnsResolverCache.Add(domain, nil)
@@ -383,6 +385,7 @@ func (e *PNS) getDNSResolver(domain string) (*pns.DNSResolver, error) {
 }
 
 func (e *PNS) newDNSResolver(domain string) (*pns.DNSResolver, error) {
+	log.Infof("newDNSResolver %s", domain)
 	// Obtain the resolver address for this domain
 	resolver, err := e.Registry.ResolverAddress(domain)
 	if err != nil {
@@ -392,12 +395,13 @@ func (e *PNS) newDNSResolver(domain string) (*pns.DNSResolver, error) {
 }
 
 func (e *PNS) getResolver(domain string) (*pns.Resolver, error) {
+	log.Infof("getResolver %s", domain)
 	if !resolverCache.Contains(domain) {
 		resolver, err := e.newResolver(domain)
 		if err == nil {
 			resolverCache.Add(domain, resolver)
 		} else {
-			log.Infof("err %s", err.Error())
+			log.Infof("getResolver err %s", err.Error())
 			if err.Error() == "no contract code at given address" ||
 				strings.HasSuffix(err.Error(), " is not a resolver contract") {
 				resolverCache.Add(domain, nil)
@@ -412,6 +416,7 @@ func (e *PNS) getResolver(domain string) (*pns.Resolver, error) {
 }
 
 func (e *PNS) newResolver(domain string) (*pns.Resolver, error) {
+	log.Infof("newResolver %s", domain)
 	// Obtain the resolver address for this domain
 	resolver, err := e.Registry.ResolverAddress(domain)
 	if err != nil {
@@ -423,6 +428,7 @@ func (e *PNS) newResolver(domain string) (*pns.Resolver, error) {
 // Ready returns true if we're ready to serve DNS records i.e. our chain is synced
 func (e PNS) Ready() bool {
 	progress, err := e.Client.SyncProgress(context.Background())
+	log.Infof("Ready %s", err.Error())
 	if err != nil {
 		return false
 	}
