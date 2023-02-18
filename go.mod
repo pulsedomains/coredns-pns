@@ -11,7 +11,4 @@ require (
 	github.com/miekg/dns v1.1.25
 	github.com/pulsedomains/go-pns/v3 v3.5.1
 	golang.org/x/crypto v0.4.0
-	gopkg.in/olebedev/go-duktape.v3 v3.0.0-20200619000410-60c24ae608a6 // indirect
-	gopkg.in/urfave/cli.v1 v1.20.0 // indirect
-	gotest.tools v2.2.0+incompatible // indirect
 )
