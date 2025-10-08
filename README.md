@@ -3,13 +3,16 @@ A CoreDNS plugin for resolving PulseChain Name Service (PNS) records and IPFS co
 
 ---
 
+![Hero banner](hero.png)
+
+---
+
 ## Introduction
 CoreDNS-PNS is a plugin for [CoreDNS](https://coredns.io) that allows DNS resolution of domains stored on the **PulseChain blockchain** and enables access to **IPFS/IPNS/Skynet** content via PNS.  
 
 This plugin was originally used to power **[PLS.TO](https://pls.to)**, a community gateway that provided zero-configuration access to PNS names and decentralized content in any standard web browser.  
 
-The hosted **PLS.TO** service is no longer active, but with this plugin you can **self-host your own gateway** or contribute to the ecosystem.
-
+The hosted **PLS.TO** service is no longer active, but with this plugin you can **self-host your own gateway** or contribute to the ecosystem.  
 
 ---
 
@@ -45,6 +48,17 @@ The second feature provides a mechanism to map DNS domains to PNS domains by rem
 - If a **TXT record** is requested: returns the contenthash  
 
 This makes IPFS content directly retrievable by any web browser.  
+
+---
+
+## Example: From IPFS to Web2
+Below is an example of how CoreDNS-PNS maps a decentralized **IPFS hash** into a user-friendly **Web2-compatible URL**:  
+
+![IPFS to Web2 Example](example.avif)
+
+With this mapping, users can access content at:  
+- **Native IPFS link:** `ipfs://QmExampleHash...`  
+- **Browser-compatible link:** `mydapp.pls.to`  
 
 ---
 
